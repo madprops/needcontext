@@ -1,3 +1,5 @@
+// needcontext v1.0
+
 // Main object
 const NeedContext = {}
 
