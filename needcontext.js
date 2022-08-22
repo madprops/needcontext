@@ -13,7 +13,7 @@ NeedContext.show = function (e, items) {
   let y = e.clientY
 
   let container = document.createElement("div")
-  container.classList.add("needcontext-container")
+  container.id = "needcontext-container"
   
   for (let [i, item] of items.entries()) {
     let el = document.createElement("div")
@@ -29,22 +29,23 @@ NeedContext.show = function (e, items) {
   }
   
   document.body.appendChild(container)
+  
+  let c = document.querySelector("#needcontext-container")
 
-  if ((y + container.offsetHeight) + 5 > document.body.clientHeight) {
-    y = document.body.clientHeight - container.offsetHeight - 5
+  if ((y + c.offsetHeight) + 5 > document.body.clientHeight) {
+    y = document.body.clientHeight - c.offsetHeight - 5
   }
 
-  if ((x + container.offsetWidth) + 5 > document.body.clientWidth) {
-    x = document.body.clientWidth - container.offsetWidth - 5
-  }  
+  if ((x + c.offsetWidth) + 5 > document.body.clientWidth) {
+    x = document.body.clientWidth - c.offsetWidth - 5
+  }
 
-  container.style.left = x
-  container.style.top = y
+  c.style.left = `${x}px`
+  c.style.top = `${y}px`
 
-  NeedContext.select_item(0)
-
-  NeedContext.container = container
+  NeedContext.container = c
   NeedContext.items = items
+  NeedContext.select_item(0)
 }
 
 // Hide the menu
@@ -93,11 +94,12 @@ NeedContext.init = function () {
   let style = document.createElement("style")
 
   let css = `
-    .needcontext-container {
+    #needcontext-container {
       position: fixed;
       z-index: 9999999999;
       background-color: white;
       color: black;
+      font-size: 17px;
       font-family: sans-serif;
       display: flex;
       flex-direction: column;
@@ -124,7 +126,7 @@ NeedContext.init = function () {
   document.head.appendChild(style)
 
   document.addEventListener("mousedown", function (e) {
-    if (!e.target.closest(".needcontext-container")) {
+    if (!e.target.closest("#needcontext-container")) {
       NeedContext.hide()
     } else {
       NeedContext.select_action()
