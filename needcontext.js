@@ -5,9 +5,7 @@ const NeedContext = {}
 
 // Show the menu
 NeedContext.show = function (e, items) {
-  if (NeedContext.container) {
-    NeedContext.hide()
-  }
+  NeedContext.hide()
 
   let x = e.clientX
   let y = e.clientY
@@ -46,15 +44,14 @@ NeedContext.show = function (e, items) {
   NeedContext.container = c
   NeedContext.items = items
   NeedContext.select_item(0)
+  NeedContext.open = true
 }
 
 // Hide the menu
 NeedContext.hide = function () {
-  if (NeedContext.container) {
+  if (NeedContext.open) {
     NeedContext.container.remove()
-    NeedContext.container = undefined
-    NeedContext.items = undefined
-    NeedContext.index = undefined
+    NeedContext.open = false
   }
 }
 
@@ -134,7 +131,7 @@ NeedContext.init = function () {
   })
 
   document.addEventListener("keydown", function (e) {
-    if (!NeedContext.container) {
+    if (!NeedContext.open) {
       return
     }
 
