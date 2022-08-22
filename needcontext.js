@@ -2,13 +2,12 @@
 
 // Main object
 const NeedContext = {}
+NeedContext.open = false
+NeedContext.keydown = false
 
 // Show the menu
-NeedContext.show = function (e, items) {
+NeedContext.show = function (x, y, items) {
   NeedContext.hide()
-
-  let x = e.clientX
-  let y = e.clientY
 
   let container = document.createElement("div")
   container.id = "needcontext-container"
@@ -52,6 +51,7 @@ NeedContext.hide = function () {
   if (NeedContext.open) {
     NeedContext.container.remove()
     NeedContext.open = false
+    NeedContext.keydown = false
   }
 }
 
@@ -136,19 +136,36 @@ NeedContext.init = function () {
     }
 
     e.stopPropagation()
+    NeedContext.keydown = true
     
     if (e.key === "ArrowUp") {
       NeedContext.select_up()
     } else if (e.key === "ArrowDown") {
       NeedContext.select_down()
-    } else if (e.key === "Enter") {
-      NeedContext.select_action()
-    } else if (e.key === "Escape") {
-      NeedContext.hide()
     }
 
     e.preventDefault()
   })
+
+  document.addEventListener("keyup", function (e) {
+    if (!NeedContext.open) {
+      return
+    }
+
+    if (!NeedContext.keydown) {
+      return
+    }
+
+    e.stopPropagation()
+
+    if (e.key === "Escape") {
+      NeedContext.hide()
+    } else if (e.key === "Enter") {
+      NeedContext.select_action()
+    }
+
+    e.preventDefault()
+  })  
 }
 
 // Start

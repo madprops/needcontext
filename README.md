@@ -25,6 +25,13 @@ el.addEventListener("click", function (e) {
     }
   })
 
-  NeedContext.show(e, items)
+  let rect = el.getBoundingClientRect()
+
+  // For flexibility reasons you have to provide the coords
+  NeedContext.show(rect.left, rect.top, items)
+
+  if (NeedContext.open) {
+    // 
+  }
 })
 ```

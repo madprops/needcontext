@@ -52,6 +52,7 @@
       }
     })
 
-    NeedContext.show(e, items)
+    let rect = el.getBoundingClientRect()
+    NeedContext.show(rect.left, rect.top, items)
   })
 </script>
