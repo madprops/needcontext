@@ -96,7 +96,7 @@ NeedContext.init = function () {
       z-index: 9999999999;
       background-color: white;
       color: black;
-      font-size: 17px;
+      font-size: 16px;
       font-family: sans-serif;
       display: flex;
       flex-direction: column;
@@ -143,6 +143,8 @@ NeedContext.init = function () {
       NeedContext.select_down()
     } else if (e.key === "Enter") {
       NeedContext.select_action()
+    } else if (e.key === "Escape") {
+      NeedContext.hide()
     }
 
     e.preventDefault()
