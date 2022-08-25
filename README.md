@@ -24,10 +24,6 @@ items.push({
 
 document.querySelector("#button").addEventListener("click", function (e) {
   NeedContext.show_on_element(this, items)
-  
-  if (NeedContext.open) {
-    console.log("Menu is open right now")
-  }
 })
 
 document.querySelector("#button2").addEventListener("click", function (e) {
@@ -37,6 +33,11 @@ document.querySelector("#button2").addEventListener("click", function (e) {
 document.querySelector("#button3").addEventListener("click", function (e) {
   NeedContext.show(e.clientX, e.clientY, items)
 })
+
+// Can use this to check if open
+if (NeedContext.open) {
+  console.log("Menu is open right now")
+}
 
 // Optional
 NeedContext.after_show = function () {
