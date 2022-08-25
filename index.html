@@ -61,9 +61,20 @@
     }
   })
 
+  // Optional
+  NeedContext.after_show = function () {
+    console.log("Menu is now open")
+  }
+
+  // Optional
+  NeedContext.after_hide = function () {
+    console.log("Menu is now hidden")
+  }
+
   document.querySelector("#button").addEventListener("click", function (e) {
     NeedContext.show_on_element(this, items)
     
+    // Check if open
     if (NeedContext.open) {
       console.log("Menu is open right now")
     }
