@@ -37,4 +37,14 @@ document.querySelector("#button2").addEventListener("click", function (e) {
 document.querySelector("#button3").addEventListener("click", function (e) {
   NeedContext.show(e.clientX, e.clientY, items)
 })
+
+// Optional
+NeedContext.after_show = function () {
+  console.log("Menu is now open")
+}
+
+// Optional
+NeedContext.after_hide = function () {
+  console.log("Menu is now hidden")
+}
 ```
