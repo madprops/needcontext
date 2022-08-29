@@ -49,3 +49,13 @@ NeedContext.after_hide = function () {
   console.log("Menu is now hidden")
 }
 ```
+
+And extra "options" object can be passed.
+
+Current options:
+
+>close_button
+
+Default: false
+
+If true, it shows a Close button at the bottom.
