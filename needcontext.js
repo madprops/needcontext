@@ -129,8 +129,9 @@ NeedContext.select_down = function () {
 
 // Do the selected action
 NeedContext.select_action = function () {
-  NeedContext.items[NeedContext.index].action()
+  let item = NeedContext.items[NeedContext.index]
   NeedContext.hide()
+  item.action()
 }
 
 // Prepare css and events
