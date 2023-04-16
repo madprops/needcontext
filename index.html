@@ -53,7 +53,7 @@
     action: function () {
       console.log("Action 2 triggered")
     }
-  })    
+  })
 
   items.push({
     text: "Action 3",
@@ -74,7 +74,7 @@
 
   document.querySelector("#button").addEventListener("click", function (e) {
     NeedContext.show_on_element(this, items)
-    
+
     // Check if open
     if (NeedContext.open) {
       console.log("Menu is open right now")
