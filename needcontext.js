@@ -303,6 +303,7 @@ NeedContext.init = () => {
       padding-bottom: 6px;
       max-height: 80vh;
       overflow: auto;
+      text-align: left;
     }
 
     .needcontext-item {
