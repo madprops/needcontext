@@ -141,6 +141,9 @@ NeedContext.show = (x, y, items) => {
   NeedContext.last_x = x
   NeedContext.last_y = y
 
+  x = Math.max(x, 0)
+  y = Math.max(y, 0)
+
   c.style.left = `${x}px`
   c.style.top = `${y}px`
 
@@ -304,6 +307,7 @@ NeedContext.init = () => {
       max-height: 80vh;
       overflow: auto;
       text-align: left;
+      max-width: 98%;
     }
 
     .needcontext-item {
