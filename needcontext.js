@@ -313,7 +313,7 @@ NeedContext.init = () => {
     }
 
     #needcontext-filter {
-      opacity: 1;
+      opacity: 0;
     }
 
     .needcontext-item {
