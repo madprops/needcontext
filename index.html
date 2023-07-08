@@ -49,14 +49,14 @@
   })
 
   items.push({
-    text: "Action 2",
+    text: "Tree 2",
     action: function () {
       console.log("Action 2 triggered")
     }
   })
 
   items.push({
-    text: "Action 3",
+    text: "Bear 3",
     action: function () {
       console.log("Action 3 triggered")
     }
@@ -65,6 +65,7 @@
   // Optional
   NeedContext.after_show = function () {
     console.log("Menu is now open")
+    NeedContext.filter.focus()
   }
 
   // Optional
@@ -87,5 +88,21 @@
 
   document.querySelector("#button3").addEventListener("click", function (e) {
     NeedContext.show(e.clientX, e.clientY, items)
+  })
+
+  document.addEventListener("keydown", function (e) {
+    if (e.ctrlKey) {
+      if (e.key === `1`) {
+        NeedContext.show(100, 200, items)
+      }
+    }
+  })
+
+  document.addEventListener("keyup", function (e) {
+    if (e.ctrlKey) {
+      if (e.key === `2`) {
+        NeedContext.show(100, 200, items)
+      }
+    }
   })
 </script>

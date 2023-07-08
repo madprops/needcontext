@@ -10,13 +10,13 @@ NeedContext.after_show = () => {}
 // Overridable function to perform after hide
 NeedContext.after_hide = () => {}
 
-// Minimum menu width
-NeedContext.min_width = `unset`
+// Minimum menu width and height
+NeedContext.min_width = `25px`
+NeedContext.min_height = `25px`
 
 // Set defaults
 NeedContext.set_defaults = () => {
   NeedContext.open = false
-  NeedContext.keydown = false
   NeedContext.mousedown = false
   NeedContext.first_mousedown = false
   NeedContext.last_x = 0
@@ -24,15 +24,18 @@ NeedContext.set_defaults = () => {
 }
 
 // Filter from keyboard input
-NeedContext.filter = (key) => {
+NeedContext.do_filter = () => {
+  let value = NeedContext.filter.value.toLowerCase().trim()
   let selected = false
 
-  if (key) {
+  if (value) {
     for (let [i, item] of NeedContext.items.entries()) {
-      if (item.separator || !item.text.toLowerCase().startsWith(key)) {
+      if (item.separator) {
         item.element.classList.add(`needcontext-hidden`)
+        continue
       }
-      else {
+
+      if (item.text.toLowerCase().includes(value)) {
         item.element.classList.remove(`needcontext-hidden`)
 
         if (!selected) {
@@ -41,17 +44,13 @@ NeedContext.filter = (key) => {
 
         selected = true
       }
+      else {
+        item.element.classList.add(`needcontext-hidden`)
+      }
     }
   }
 
-  if (!selected) {
-    for (let el of document.querySelectorAll(`.needcontext-item`)) {
-      el.classList.remove(`needcontext-hidden`)
-    }
-
-    NeedContext.select_item(0)
-  }
-  else {
+  if (selected) {
     for (let el of document.querySelectorAll(`.needcontext-separator`)) {
       el.classList.add(`needcontext-hidden`)
     }
@@ -147,8 +146,10 @@ NeedContext.show = (x, y, items) => {
   c.style.left = `${x}px`
   c.style.top = `${y}px`
 
-  document.querySelector(`#needcontext-container`).style.minWidth = NeedContext.min_width
-
+  NeedContext.filter.value = ``
+  let container = document.querySelector(`#needcontext-container`)
+  container.style.minWidth = NeedContext.min_width
+  container.style.minHeight = NeedContext.min_height
   NeedContext.select_item(selected_index)
   NeedContext.open = true
   NeedContext.after_show()
@@ -310,6 +311,10 @@ NeedContext.init = () => {
       max-width: 98%;
     }
 
+    #needcontext-filter {
+      opacity: 0;
+    }
+
     .needcontext-item {
       white-space: nowrap;
     }
@@ -372,17 +377,14 @@ NeedContext.init = () => {
       return
     }
 
-    e.stopPropagation()
-    NeedContext.keydown = true
-
     if (e.key === `ArrowUp`) {
       NeedContext.select_up()
+      e.stopPropagation()
     }
     else if (e.key === `ArrowDown`) {
       NeedContext.select_down()
+      e.stopPropagation()
     }
-
-    e.preventDefault()
   })
 
   document.addEventListener(`keyup`, (e) => {
@@ -390,27 +392,18 @@ NeedContext.init = () => {
       return
     }
 
-    if (!NeedContext.keydown) {
-      return
-    }
-
-    e.stopPropagation()
-    NeedContext.keydown = false
-
     if (e.key === `Escape`) {
       NeedContext.hide()
+      e.stopPropagation()
     }
     else if (e.key === `Enter`) {
       NeedContext.select_action(e)
-    }
-    else if (e.key.match(/^[a-z0-9]{1}$/i)) {
-      NeedContext.filter(e.key)
+      e.stopPropagation()
     }
     else if (e.key === `Backspace`) {
-      NeedContext.filter(``)
+      NeedContext.do_filter(``)
+      e.stopPropagation()
     }
-
-    e.preventDefault()
   })
 
   NeedContext.set_defaults()
@@ -421,14 +414,24 @@ NeedContext.create = () => {
   NeedContext.main = document.createElement(`div`)
   NeedContext.main.id = `needcontext-main`
   NeedContext.main.classList.add(`needcontext-hidden`)
-
   NeedContext.container = document.createElement(`div`)
   NeedContext.container.id = `needcontext-container`
+  NeedContext.filter = document.createElement(`input`)
+  NeedContext.filter.id = `needcontext-filter`
+  NeedContext.filter.type = `text`
+  NeedContext.filter.autocomplete = `off`
+  NeedContext.filter.spellcheck = false
+  NeedContext.filter.placeholder = `Filter`
+
+  NeedContext.filter.addEventListener(`input`, (e) => {
+    NeedContext.do_filter()
+  })
 
   NeedContext.main.addEventListener(`contextmenu`, (e) => {
     e.preventDefault()
   })
 
+  NeedContext.main.append(NeedContext.filter)
   NeedContext.main.append(NeedContext.container)
   document.body.appendChild(NeedContext.main)
   NeedContext.created = true
