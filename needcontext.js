@@ -17,6 +17,7 @@ NeedContext.min_height = `25px`
 // Set defaults
 NeedContext.set_defaults = () => {
   NeedContext.open = false
+  NeedContext.keydown = false
   NeedContext.mousedown = false
   NeedContext.first_mousedown = false
   NeedContext.last_x = 0
@@ -312,7 +313,7 @@ NeedContext.init = () => {
     }
 
     #needcontext-filter {
-      opacity: 0;
+      opacity: 1;
     }
 
     .needcontext-item {
@@ -377,13 +378,15 @@ NeedContext.init = () => {
       return
     }
 
+    NeedContext.keydown = true
+
     if (e.key === `ArrowUp`) {
       NeedContext.select_up()
-      e.stopPropagation()
+      e.preventDefault()
     }
     else if (e.key === `ArrowDown`) {
       NeedContext.select_down()
-      e.stopPropagation()
+      e.preventDefault()
     }
   })
 
@@ -392,18 +395,21 @@ NeedContext.init = () => {
       return
     }
 
+    if (!NeedContext.keydown) {
+      return
+    }
+
+    e.stopPropagation()
+    NeedContext.keydown = false
+
     if (e.key === `Escape`) {
       NeedContext.hide()
-      e.stopPropagation()
     }
     else if (e.key === `Enter`) {
       NeedContext.select_action(e)
-      e.stopPropagation()
     }
-    else if (e.key === `Backspace`) {
-      NeedContext.do_filter(``)
-      e.stopPropagation()
-    }
+
+    e.preventDefault()
   })
 
   NeedContext.set_defaults()

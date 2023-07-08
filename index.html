@@ -99,8 +99,9 @@
   })
 
   document.addEventListener("keyup", function (e) {
-    if (e.ctrlKey) {
-      if (e.key === `2`) {
+    if (e.shiftKey) {
+      if (e.key === `Enter`) {
+        console.log("Shift + Enter pressed")
         NeedContext.show(100, 200, items)
       }
     }
