@@ -1,4 +1,4 @@
-<!-- Sloppy html for testing -->
+<!DOCTYPE html>
 
 <script src="needcontext.js"></script>
 
@@ -69,6 +69,34 @@
       console.log("Action 3 triggered")
     }
   })
+
+  items.push({
+    text: "More",
+    get_items: function () {
+      return get_more()
+    }
+  })
+
+  function get_more () {
+    console.log("Getting more")
+    let items = []
+
+    items.push({
+      text: "Dog 1",
+      action: function () {
+        console.log("Action 4 triggered")
+      }
+    })
+
+    items.push({
+      text: "Dog 2",
+      action: function () {
+        console.log("Action 5 triggered")
+      }
+    })
+
+    return items
+  }
 
   // Optional
   NeedContext.after_show = function () {
