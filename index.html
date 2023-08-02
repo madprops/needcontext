@@ -78,7 +78,64 @@
   })
 
   function get_more () {
-    console.log("Getting more")
+    let items = []
+
+    items.push({
+      text: "Dog 1",
+      action: function () {
+        console.log("Action 4 triggered")
+      }
+    })
+
+    items.push({
+      text: "Dog 2",
+      action: function () {
+        console.log("Action 5 triggered")
+      }
+    })
+
+    items.push({
+      separator: true,
+    })
+
+    items.push({
+      text: "More 2",
+      get_items: function () {
+        return get_more_2()
+      }
+    })
+
+    items.push({
+      text: "More 3",
+      get_items: function () {
+        return get_more_2()
+      }
+    })
+
+    return items
+  }
+
+  function get_more_2 () {
+    let items = []
+
+    items.push({
+      text: "Dog 1",
+      action: function () {
+        console.log("Action 4 triggered")
+      }
+    })
+
+    items.push({
+      text: "Dog 2",
+      action: function () {
+        console.log("Action 5 triggered")
+      }
+    })
+
+    return items
+  }
+
+  function get_more_3 () {
     let items = []
 
     items.push({
