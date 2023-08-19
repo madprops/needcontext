@@ -123,6 +123,10 @@ NeedContext.show = (x, y, items, root = true) => {
 
   for (let item of items) {
     let el = document.createElement(`div`)
+    let icon = document.createElement(`div`)
+    let text = document.createElement(`div`)
+    el.append(icon)
+    el.append(text)
     el.classList.add(`needcontext-item`)
 
     if (item.separator) {
@@ -130,7 +134,15 @@ NeedContext.show = (x, y, items, root = true) => {
     }
     else {
       el.classList.add(`needcontext-normal`)
-      el.textContent = item.text
+
+      if (item.icon) {
+        icon.innerHTML = item.icon
+      }
+
+      if (item.text) {
+        text.textContent = item.text
+      }
+
       el.dataset.index = index
       item.index = index
 
@@ -284,7 +296,7 @@ NeedContext.select_down = () => {
 // Do the selected action
 NeedContext.select_action = async (e, index = NeedContext.index, mode = `mouse`) => {
   if (mode === `mouse`) {
-    if (!e.target.classList.contains(`needcontext-normal`)) {
+    if (!e.target.closest(`.needcontext-normal`)) {
       return
     }
   }
@@ -372,6 +384,10 @@ NeedContext.init = () => {
 
     .needcontext-item {
       white-space: nowrap;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .needcontext-normal {
