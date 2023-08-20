@@ -27,14 +27,14 @@ document.querySelector("#button2").addEventListener("click", function (e) {
   NeedContext.show(100, 200, items)
 })
 
-// Show at element
+// Show on element
 document.querySelector("#button").addEventListener("click", function (e) {
   NeedContext.show_on_element(this, items)
 })
 
-// Show at center of window
+// Show on center of window
 document.querySelector("#button3").addEventListener("click", function (e) {
-  NeedContext.show_center(items)
+  NeedContext.show_on_center(items)
 })
 
 // Can use this to check if open
