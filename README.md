@@ -58,3 +58,7 @@ NeedContext.after_hide = function () {
 >direct
 
 If there's only 1 item, trigger action immidiately.
+
+>alt_action
+
+Action to perform when middle clicking an item.
