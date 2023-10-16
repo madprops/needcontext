@@ -67,4 +67,4 @@ Action to perform when middle clicking an item.
 
 Function provided to a show function to act on drag-reorder of items.
 
-Arguments returned: start_index and end_index
+Arguments returned: `start_index` and `end_index`.
