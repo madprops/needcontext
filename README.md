@@ -27,16 +27,6 @@ document.querySelector("#button2").addEventListener("click", function (e) {
   NeedContext.show({x: 100, y: 200, items: items})
 })
 
-// Show on element
-document.querySelector("#button").addEventListener("click", function (e) {
-  NeedContext.show_on_element({element: this, items: items})
-})
-
-// Show on center of window
-document.querySelector("#button3").addEventListener("click", function (e) {
-  NeedContext.show_on_center({items: items})
-})
-
 // Can use this to check if open
 if (NeedContext.open) {
   console.log("Menu is open right now")
