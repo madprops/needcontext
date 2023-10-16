@@ -24,17 +24,17 @@ items.push({
 
 // Show at coordinates
 document.querySelector("#button2").addEventListener("click", function (e) {
-  NeedContext.show(100, 200, items)
+  NeedContext.show({x: 100, y: 200, items: items})
 })
 
 // Show on element
 document.querySelector("#button").addEventListener("click", function (e) {
-  NeedContext.show_on_element(this, items)
+  NeedContext.show_on_element({element: this, items: items})
 })
 
 // Show on center of window
 document.querySelector("#button3").addEventListener("click", function (e) {
-  NeedContext.show_on_center(items)
+  NeedContext.show_on_center({items: items})
 })
 
 // Can use this to check if open
@@ -62,3 +62,9 @@ If there's only 1 item, trigger action immidiately.
 >alt_action
 
 Action to perform when middle clicking an item.
+
+>on_drag
+
+Function provided to a show function to act on drag-reorder of items.
+
+Argument sent: start_index and end_index
