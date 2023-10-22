@@ -45,6 +45,10 @@ NeedContext.after_hide = function () {
 
 ## Additional Properties
 
+>direct
+
+If there's only 1 item, trigger action immidiately.
+
 >alt_action
 
 Action to perform when middle clicking an item.
@@ -56,5 +60,3 @@ Function provided to a show function to act on drag-reorder of items.
 Arguments returned: `start_index` and `end_index`.
 
 If it is not sent items won't be draggable.
-
-`direct: true` sent to `show` will automatically trigger an item's action if there's only 1 item.
