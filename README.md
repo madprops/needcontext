@@ -19,7 +19,8 @@ items.push({
   text: "Action 3",
   action: function () {
     console.log("Action 3 triggered")
-  }
+  },
+  info: "This is action 3"
 })
 
 // Show at coordinates
