@@ -210,6 +210,10 @@ NeedContext.show = (args = {}) => {
         el.title = item.info.trim()
       }
 
+      if (item.bold) {
+        el.classList.add(`needcontext-bold`)
+      }
+
       el.dataset.index = index
       item.index = index
 
@@ -560,6 +564,10 @@ NeedContext.init = () => {
       height: 1.25rem;
       object-fit: contain;
     }
+
+    .needcontext-bold {
+      font-weight: bold;
+    }
   `
 
   style.innerText = css
@@ -807,8 +815,10 @@ NeedContext.modkey = (e) => {
 
 // Do an action
 NeedContext.action = (item, e) => {
-  if (!NeedContext.is_visible(item.element)) {
-    return
+  if (item.element) {
+    if (!NeedContext.is_visible(item.element)) {
+      return
+    }
   }
 
   let args = NeedContext.args
@@ -853,8 +863,10 @@ NeedContext.dismiss = (e) => {
 
 // Alternative action
 NeedContext.alt_action = (item, e) => {
-  if (!NeedContext.is_visible(item.element)) {
-    return
+  if (item.element) {
+    if (!NeedContext.is_visible(item.element)) {
+      return
+    }
   }
 
   if (NeedContext.args.after_alt_action) {
