@@ -112,7 +112,6 @@ NeedContext.show = (args = {}) => {
     expand: false,
     picker_mode: false,
     margin: 0,
-    index: 0,
   }
 
   NeedContext.def_args(def_args, args)
@@ -137,6 +136,22 @@ NeedContext.show = (args = {}) => {
 
   let center = args.x === undefined || args.y === undefined
   args.items = args.items.slice(0)
+
+  if (args.index === undefined) {
+    let items = args.items.filter(x => !x.separator)
+
+    for (let [i, item] of items.entries()) {
+      if (item.selected) {
+        args.index = i
+        break
+      }
+    }
+  }
+
+  if (args.index === undefined) {
+    args.index = 0
+  }
+
   let selected_index
   let layer = NeedContext.get_layer()
 
@@ -447,6 +462,11 @@ NeedContext.select_action = async (e, index = NeedContext.index, mode = `mouse`)
   else if (e.button === 1) {
     if (item.alt_action) {
       NeedContext.alt_action(item, e)
+    }
+  }
+  else if (e.button === 2) {
+    if (item.context_action) {
+      NeedContext.context_action(item, e)
     }
   }
 }
@@ -875,6 +895,22 @@ NeedContext.alt_action = (item, e) => {
 
   NeedContext.hide(e)
   item.alt_action(e)
+}
+
+// Context (right click) action
+NeedContext.context_action = (item, e) => {
+  if (item.element) {
+    if (!NeedContext.is_visible(item.element)) {
+      return
+    }
+  }
+
+  if (NeedContext.args.after_context_action) {
+    NeedContext.args.after_context_action(e)
+  }
+
+  NeedContext.hide(e)
+  item.context_action(e)
 }
 
 // Start
