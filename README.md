@@ -5,7 +5,7 @@ items.push({
   text: "Action 1",
   action: function () {
     console.log("Action 1 triggered")
-  }
+  },
 })
 
 items.push({
@@ -26,7 +26,7 @@ items.push({
   action: function () {
     console.log("Action 3 triggered")
   },
-  info: "This is action 3"
+  info: "This is action 3",
 })
 
 // Show at coordinates
