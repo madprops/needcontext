@@ -12,7 +12,13 @@ items.push({
   text: "Action 2",
   action: function () {
     console.log("Action 2 triggered")
-  }
+  },
+  alt_action: function () {
+    console.log("Action on middle click")
+  },
+  context_action: function () {
+    console.log("Action on right click")
+  },
 })
 
 items.push({
