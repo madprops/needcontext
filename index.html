@@ -19,10 +19,9 @@
     font-size: 2rem;
     cursor: pointer;
     margin: 5rem;
-    user-select: none;
   }
 
-  #button3 {
+  #button2 {
     height: 20rem;
     background-color: aliceblue;
     color: black;
@@ -167,7 +166,7 @@
   }
 
   document.querySelector("#button").addEventListener("click", function (e) {
-    NeedContext.show_on_element(this, items)
+    NeedContext.show({items: items, element: this, title: `On Element`})
 
     // Check if open
     if (NeedContext.open) {
@@ -176,27 +175,10 @@
   })
 
   document.querySelector("#button2").addEventListener("click", function (e) {
-    NeedContext.show(100, 200, items)
+    NeedContext.show({items: items, e: e, title: `On Coords`})
   })
 
   document.querySelector("#button3").addEventListener("click", function (e) {
-    NeedContext.show(e.clientX, e.clientY, items)
-  })
-
-  document.addEventListener("keydown", function (e) {
-    if (e.ctrlKey) {
-      if (e.key === `1`) {
-        NeedContext.show(100, 200, items)
-      }
-    }
-  })
-
-  document.addEventListener("keyup", function (e) {
-    if (e.shiftKey) {
-      if (e.key === `Enter`) {
-        console.log("Shift + Enter pressed")
-        NeedContext.show(100, 200, items)
-      }
-    }
+    NeedContext.show({items: items, e: e})
   })
 </script>
