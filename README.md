@@ -67,3 +67,11 @@ Function provided to a show function to act on drag-reorder of items.
 Arguments returned: `start_index` and `end_index`.
 
 If it is not sent items won't be draggable.
+
+>title_number
+
+If true it will show the number of items in the title.
+
+>fake
+
+You can give this property to an item to not be counted when showing the number in titles.
