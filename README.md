@@ -1,4 +1,6 @@
 ```javascript
+NeedContext.init()
+
 let items = []
 
 items.push({
