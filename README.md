@@ -15,7 +15,7 @@ items.push({
   action: function () {
     console.log("Action 2 triggered")
   },
-  alt_action: function () {
+  middle_action: function () {
     console.log("Action on middle click")
   },
   context_action: function () {
@@ -58,9 +58,9 @@ NeedContext.after_hide = function () {
 
 If there's only 1 item, trigger action immidiately.
 
->alt_action
+>middle_action | shift_action | ctrl_action | alt_action
 
-Action to perform when middle clicking an item.
+Action to perform when clicking in different forms.
 
 >on_drag
 
