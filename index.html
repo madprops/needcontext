@@ -175,10 +175,13 @@
   })
 
   document.querySelector("#button2").addEventListener("click", function (e) {
+    console.log(items)
     NeedContext.show({items: items, e: e, title: `On Coords`})
   })
 
   document.querySelector("#button3").addEventListener("click", function (e) {
     NeedContext.show({items: items, e: e})
   })
+
+  NeedContext.init()
 </script>
