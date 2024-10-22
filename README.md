@@ -78,6 +78,10 @@ If true it will show the number of items in the title.
 
 You can give this property to an item to not be counted when showing the number in titles.
 
+>compact
+
+Show the list in a compact row showing only icons.
+
 ---
 
 Make sure to run NeedContext.init() somewhere in your start process to initialize it.
