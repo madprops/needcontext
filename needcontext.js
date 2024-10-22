@@ -1,4 +1,4 @@
-// NeedContext v8.0
+// NeedContext v9.0
 
 // Main object
 const NeedContext = {}
@@ -121,6 +121,7 @@ NeedContext.show = (args = {}) => {
     expand: false,
     picker_mode: false,
     margin: 0,
+    compact: false,
   }
 
   NeedContext.def_args(def_args, args)
@@ -133,7 +134,7 @@ NeedContext.show = (args = {}) => {
     NeedContext.create()
   }
 
-  if (args.e && args.e.clientX !== undefined && args.e.clientY !== undefined) {
+  if (args.e && (args.e.clientX !== undefined) && (args.e.clientY !== undefined)) {
     args.x = args.e.clientX
     args.y = args.e.clientY
   }
@@ -147,7 +148,7 @@ NeedContext.show = (args = {}) => {
     NeedContext.level = 0
   }
 
-  let center = args.x === undefined || args.y === undefined
+  let center = (args.x === undefined) || (args.y === undefined)
   args.items = args.items.slice(0)
 
   if (args.index === undefined) {
@@ -191,14 +192,15 @@ NeedContext.show = (args = {}) => {
   }
 
   let index = 0
-
   let c = NeedContext.container
+
   c.innerHTML = ``
   c.style.left = `unset`
   c.style.top = `unset`
   c.style.transform = `unset`
   c.style.minWidth = `unset`
   c.style.minHeight = `unset`
+  c.style.maxWidth = `unset`
 
   if (args.title) {
     let title = document.createElement(`div`)
@@ -236,6 +238,13 @@ NeedContext.show = (args = {}) => {
   c.append(NeedContext.clear_button())
   let normal_items = []
 
+  if (args.compact) {
+    c.classList.add(`needcontext-compact`)
+  }
+  else {
+    c.classList.remove(`needcontext-compact`)
+  }
+
   for (let item of args.items) {
     let el = document.createElement(`div`)
     el.classList.add(`needcontext-item`)
@@ -267,6 +276,11 @@ NeedContext.show = (args = {}) => {
           icon.addEventListener(`click`, (e) => {
             item.icon_action(e, icon)
           })
+        }
+
+        if (args.compact) {
+          let titles = [item.title, item.text].filter(Boolean)
+          icon.title = titles.join(' - ')
         }
 
         icon.append(item.icon)
@@ -372,6 +386,7 @@ NeedContext.show = (args = {}) => {
   }
 
   c.style.minHeight = NeedContext.min_height
+
   NeedContext.filter.value = ``
   NeedContext.filtered = false
   NeedContext.select_item(selected_index)
@@ -615,6 +630,19 @@ NeedContext.init = () => {
       max-width: 98%;
     }
 
+    #needcontext-container.needcontext-compact {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .needcontext-compact .needcontext-text {
+      display: none;
+    }
+
+    .needcontext-compact .needcontext-separator {
+      display: none;
+    }
+
     #needcontext-container.without_title {
       padding-top: 5px;
     }
@@ -755,11 +783,11 @@ NeedContext.init = () => {
 
     NeedContext.keydown = true
 
-    if (e.key === `ArrowUp`) {
+    if ([`ArrowUp`, `ArrowLeft`].includes(e.key)) {
       NeedContext.select_next(`up`)
       e.preventDefault()
     }
-    else if (e.key === `ArrowDown`) {
+    else if ([`ArrowDown`, `ArrowRight`].includes(e.key)) {
       NeedContext.select_next()
       e.preventDefault()
     }
