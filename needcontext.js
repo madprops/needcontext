@@ -1,4 +1,4 @@
-// NeedContext v9.2
+// NeedContext v9.3
 
 // Main object
 const NeedContext = {}
@@ -905,7 +905,12 @@ NeedContext.dragenter_action = (e) => {
     list.insertBefore(dragged, e.target)
   }
 
-  NeedContext.select_item(index_target)
+  items = Array.from(list.querySelectorAll(`.needcontext-item`))
+  let new_index_dragged = items.indexOf(dragged)
+  let new_index_target = items.indexOf(e.target)
+  dragged.dataset.index = new_index_dragged
+  e.target.dataset.index = new_index_target
+  NeedContext.select_item(new_index_dragged)
 }
 
 // Drag end
