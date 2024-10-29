@@ -82,6 +82,10 @@ You can give this property to an item to not be counted when showing the number 
 
 Show the list in a compact row showing only icons.
 
+>autohide
+
+Enable autohide when moving cursor away from main container.
+
 ---
 
 Make sure to run NeedContext.init() somewhere in your start process to initialize it.
