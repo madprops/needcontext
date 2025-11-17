@@ -1,4 +1,4 @@
-// NeedContext v9.8
+// NeedContext v10.0
 
 // Main object
 const NeedContext = {}
@@ -321,6 +321,13 @@ NeedContext.show = (args = {}) => {
         el.classList.add(`needcontext-bold`)
       }
 
+      if (item.direct_action) {
+        el.addEventListener(`click`, () => {
+          item.direct_action()
+          NeedContext.hide()
+        })
+      }
+
       el.dataset.index = index
       item.index = index
 
@@ -498,18 +505,23 @@ NeedContext.select_next = (direction = `down`, bounce = false) => {
 }
 
 // Do the selected action
-NeedContext.select_action = async (e, index = NeedContext.index, mode = `mouse`) => {
+NeedContext.select_action = (e, index = NeedContext.index, mode = `mouse`) => {
   if (mode === `mouse`) {
     if (!e.target.closest(`.needcontext-normal`)) {
       return
     }
   }
 
-  let x = NeedContext.last_x
-  let y = NeedContext.last_y
   let item = NeedContext.get_layer().normal_items[index]
 
-  function show_below(items) {
+  if (!item) {
+    return
+  }
+
+  let x = NeedContext.last_x
+  let y = NeedContext.last_y
+
+  let show_below = (items) => {
     NeedContext.get_layer().last_index = index
     NeedContext.level += 1
 
@@ -520,15 +532,13 @@ NeedContext.select_action = async (e, index = NeedContext.index, mode = `mouse`)
     NeedContext.show({x, y, items, root: false})
   }
 
-  function do_items(items) {
+  let do_items = (items) => {
     if ((items.length === 1) && items[0].direct) {
       NeedContext.action(items[0], e)
     }
     else {
       show_below(items)
     }
-
-    return
   }
 
   async function check_item() {
