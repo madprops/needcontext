@@ -1388,3 +1388,7 @@ NeedContext.start_autoclick = (delay) => {
     }
   }, delay || NeedContext.autoclick_delay)
 }
+
+if (typeof window !== `undefined`) {
+  window.NeedContext = NeedContext
+}
