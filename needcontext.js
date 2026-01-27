@@ -1,4 +1,4 @@
-// NeedContext v10.0
+// NeedContext v11.0
 
 // Main object
 const NeedContext = {}
@@ -25,8 +25,10 @@ NeedContext.compact_padding = `0.3rem`
 NeedContext.center_top = 20
 NeedContext.dragging = false
 NeedContext.autohide_delay = 500
-NeedContext.autoclick_delay = 500
 NeedContext.autohide_threshold = 5
+NeedContext.autoclick_delay = 500
+NeedContext.autoclick_lock = 0
+NeedContext.autoclick_lock_amount = 2
 
 // Set defaults
 NeedContext.set_defaults = () => {
@@ -718,7 +720,7 @@ NeedContext.init = () => {
     }
 
     .needcontext-highlight {
-      border: 2px solid currentColor !important;
+      border: 1px solid currentColor !important;
       border-radius: 10px;
     }
 
@@ -823,6 +825,10 @@ NeedContext.init = () => {
 
     NeedContext.check_mouse_range(e)
     NeedContext.check_auto_funcs(e)
+
+    if (NeedContext.autoclick_lock > 0) {
+      NeedContext.autoclick_lock -= 1
+    }
   })
 
   document.addEventListener(`mouseover`, (e) => {
@@ -1380,15 +1386,21 @@ NeedContext.start_autohide = (delay) => {
 // Start autoclick
 NeedContext.start_autoclick = (delay) => {
   NeedContext.autoclick_debouncer = NeedContext.create_debouncer((el, e) => {
+    if (NeedContext.autoclick_lock > 0) {
+      return
+    }
+
     if (el.closest(`.needcontext-item`)) {
       NeedContext.select_action(e)
+      NeedContext.lock_autoclick()
     }
     else if (el.closest(`.needcontext-back`)) {
       NeedContext.go_back()
+      NeedContext.lock_autoclick()
     }
   }, delay || NeedContext.autoclick_delay)
 }
 
-if (typeof window !== `undefined`) {
-  window.NeedContext = NeedContext
+NeedContext.lock_autoclick = () => {
+  NeedContext.autoclick_lock = NeedContext.autoclick_lock_amount
 }
